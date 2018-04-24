@@ -14,6 +14,14 @@ RUN xargs -a /tmp/apt-packages.txt apt-get install -y
 ADD requirements.txt /tmp/requirements/requirements.txt
 RUN pip3 install -r /tmp/requirements/requirements.txt
 
+RUN mkdir -p /usr/local/lib/vamp \
+    && cd /usr/local/lib/vamp \
+    && wget https://code.soundsoftware.ac.uk/attachments/download/1693/nnls-chroma-linux64-v1.1.tar.bz2 \
+    && tar xvjf nnls-chroma-linux64-v1.1.tar.bz2 \
+    && rm nnls-chroma-linux64-v1.1.tar.bz2 \
+    && mv nnls-chroma-linux64-v1.1/* /usr/local/lib/vamp/ \
+    && rm -r nnls-chroma-linux64-v1.1
+
 EXPOSE 8888
 RUN mkdir -p /home/ds/notebooks
 ENV HOME=/home/ds
